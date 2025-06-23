@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "SuperOldRoles": {
+      "commandName": "Project"
+    },
+    "SOR起動": {
+      "commandName": "Executable",
+      "executablePath": "$(AmongUs)\\Among Us.exe"
+    }
+  }
+}
