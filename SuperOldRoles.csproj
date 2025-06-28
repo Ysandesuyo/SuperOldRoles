@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Roles\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Among Us\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
@@ -108,6 +104,9 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Among Us\BepInEx\core\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="Reactor">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Among Us\BepInEx\plugins\Reactor.dll</HintPath>
+    </Reference>
     <Reference Include="SemanticVersioning">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Among Us\BepInEx\core\SemanticVersioning.dll</HintPath>
     </Reference>
@@ -117,6 +116,10 @@
     <Reference Include="WasmDisassembler">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Among Us\BepInEx\core\WasmDisassembler.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Patch\" />
   </ItemGroup>
 
 	<Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
