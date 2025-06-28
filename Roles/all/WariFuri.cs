@@ -22,7 +22,11 @@ namespace SuperOldRoles.Roles.all
     public static class WariFuri
     {
         public static bool jeswarisita = false;
+
+        //役職設定画面ができるまでは手動で人数を設定しよう
         public static int JesterKazu = 0;
+        
+        
         public static List<PlayerControl> dataaa;
         public static List<PlayerRolePair> rolelist;
 
