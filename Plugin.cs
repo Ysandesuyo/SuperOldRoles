@@ -31,23 +31,18 @@ public class MyMyPlugin : BasePlugin
         Instance = this;
 
 
-
     }
-    /*
-    [HarmonyPatch(typeof(InnerNet.InnerNetClient), nameof(InnerNet.InnerNetClient.Start))]
-    public static class ListenPortPatch
-    {
-        public static void Prefix(InnerNet.InnerNetClient __instance)
-        {
-            // 22000〜23000 の間でランダムポートに
-            ushort randomPort = (ushort)UnityEngine.Random.Range(22000, 23000);
-            __instance.networkPort = randomPort;
 
-            MyMyPlugin.Instance.Log.LogInfo($"[Mod] ListenPort set to: {randomPort}");
+    [HarmonyPatch(typeof(MainMenuManager),nameof(MainMenuManager.Awake))]
+    static class ModManagerAwakePatch
+    {
+        static void Postfix(MainMenuManager __instance)
+        {
+            //ModManagerのインスタンスを取り出して、ModStampを表示する。
+            ModManager.Instance.ShowModStamp();
+            
         }
     }
-    */
-
 
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendChat))]
     static class SendChatPatch
