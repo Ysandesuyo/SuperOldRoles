@@ -24,8 +24,8 @@ namespace SuperOldRoles.Roles.all
         public static bool jeswarisita = false;
 
         //役職設定画面ができるまでは手動で人数を設定しよう
-        public static int JesterKazu = 0;
-        
+        public static int JesterKazu = 1;
+        public static int BaitKazu = 1;
         
         public static List<PlayerControl> dataaa;
         public static List<PlayerRolePair> rolelist;
@@ -35,6 +35,23 @@ namespace SuperOldRoles.Roles.all
         {
             public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
             {
+
+
+
+
+
+
+                // なぜかSetRole関係でArgumentOutOfRangeExceptionが出る。dataaaはnullになってないはずなのに、、
+
+
+
+
+
+
+
+
+
+
                 if (callId == (byte)rpcenum.rpc.RoleClear)
                 {
                     rolelist = new List<PlayerRolePair>();
@@ -61,7 +78,7 @@ namespace SuperOldRoles.Roles.all
 
                     //誰を選ぶんだっけ、受け取ったIDからプレイヤー情報を抽出しよっと
                     PlayerControl pl = null;
-                    foreach (var p in PlayerControl.AllPlayerControls)
+                    foreach (var p in PlayerControl.AllPlayerControls.ToArray().ToList())
                     {
                         if (p.PlayerId == dareid)
                         {
@@ -82,8 +99,7 @@ namespace SuperOldRoles.Roles.all
 
 
                     // RoleListは、クライアントそれぞれに保存したい
-                    MyMyPlugin.Instance.Log.LogInfo("Jesterは、"+rolelist.Where(i=>i.Role==RoleEnum.Jester).First().Player.PlayerId);
-                    
+
                 }
                 if (callId == (byte)rpcenum.rpc.SetRoleImpo)
                 {
@@ -112,7 +128,6 @@ namespace SuperOldRoles.Roles.all
                     rolelist.Add(new PlayerRolePair(pl, naniroleenum));
 
                     //ここのdataaa.Removeで、nullが検出されたのでエラーになる
-                    MyMyPlugin.Instance.Log.LogInfo(rolelist.Count+"rolelistcount");
 
                     //以下、テスト用
 
@@ -128,7 +143,6 @@ namespace SuperOldRoles.Roles.all
         {
             public static void Clear()
             {
-                MyMyPlugin.Instance.Log.LogInfo("Clear ni kimasita");
                 List<PlayerControl> allpl = PlayerControl.AllPlayerControls.ToArray().ToList();
                 
 
@@ -146,18 +160,24 @@ namespace SuperOldRoles.Roles.all
 
 
             }
-            public static void SetRole(List<PlayerControl> players, byte naniroleenum, int count)
+            public static void SetRole(List<PlayerControl> playersdata, byte naniroleenum, int count)
             {
+
+                int countnaka = count;
                 // 選ぶ予定の人数より無役のプレイヤーが少なかったらブッチ
-                if(players.Count < count)
+                if (playersdata.Count < count)
                 {
                     return;
                 }
                 for (int i = 0; i < count; i++)
                 {
+
+                    
+
+
                     //誰を選ぶかに使うランダムな数字をセット
                     var rand = new Random();
-                    PlayerControl selectedPlayer = players[rand.Next(players.Count)];
+                    PlayerControl selectedPlayer = playersdata[rand.Next(playersdata.Count)];
                     
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.SetRole, SendOption.Reliable);
@@ -212,8 +232,9 @@ namespace SuperOldRoles.Roles.all
                 {
                     return;
                 }
-                foreach (PlayerControl pla in dataaa)
+                for (int i = dataaa.Count - 1; i >= 0; i--)
                 {
+                    PlayerControl pla = dataaa[i];
                     if (pla.Data.RoleType==RoleTypes.Impostor)
                     {
                         PlayerControl selectedPlayer = pla;
@@ -235,15 +256,12 @@ namespace SuperOldRoles.Roles.all
 
 
                         dataaa.Remove(pla); // 役職を与えたプレイヤーは、役職が二重になっても困るので、リストから消しとく
-
-
-
-                        break;
                     }
                 }
 
                 RoleWariFuri.SetRole(dataaa, (byte) RoleEnum.Jester, JesterKazu);
 
+                RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Bait, BaitKazu);
                 //クルーの処理
 
                 return;

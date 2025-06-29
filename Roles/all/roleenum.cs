@@ -22,11 +22,14 @@ namespace SuperOldRoles.Roles.all
 
         public enum RoleEnum:byte
         {
-            Crewmate=0,
+            Crewmate = 0,
+            Bait = 1,
+            
 
-            Jester=50,
+            Jester = 50,
+            Emperor = 51,
 
-            Impostor=100,
+            Impostor = 100,
         }
     }
 }

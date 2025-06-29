@@ -43,7 +43,6 @@ namespace SuperOldRoles.Roles
         {
             public static void Postfix(PlayerControl __instance)
             {
-                MyMyPlugin.Instance.Log.LogInfo(WariFuri.rolelist.Count + WariFuri.rolelist[1].Player.PlayerId);
                 int plid = __instance.PlayerId;
                 foreach (PlayerRolePair dare in WariFuri.rolelist)
                 {
