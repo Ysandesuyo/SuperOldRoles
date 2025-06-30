@@ -14,6 +14,7 @@ namespace SuperOldRoles.Rpc
             RoleClear=100,
             SetRole=101,
             SetRoleImpo=102,
+            RoleClearKakunin=103,
         }
        
     }
