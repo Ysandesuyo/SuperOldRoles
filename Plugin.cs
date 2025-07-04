@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using InnerNet;
+using UnityEngine;
 //情報を読み込む
 
 
@@ -70,6 +71,28 @@ public class MyMyPlugin : BasePlugin
 
         }
     }
+
+
+    /*
+     * これを使い、座標を得る
+
+
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
+    public static class aabcde
+    {
+        public static void Postfix(PlayerControl __instance)
+        {
+            Vector2 pos = __instance.GetTruePosition();
+            __instance.SetName(pos.x + "aaa" + pos.y + "aaa");
+        }
+    }
+
+
+
+    */
+
+
+    
     /*
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcCompleteTask))]
     //[改造するよ（typeof（改造する大きな種類）,nameof(そのなかで何が起こったら改造する？）]
@@ -83,7 +106,7 @@ public class MyMyPlugin : BasePlugin
         }
     }*/
 
-    
+
 
 }
 

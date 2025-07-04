@@ -25,13 +25,15 @@ namespace SuperOldRoles.Roles.all
         //役職設定画面ができるまでは手動で人数を設定しよう
         public static int JesterKazu = 0;
         public static int BaitKazu = 1;
-        public static int EmperorKazu = 2;
-        public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu;
+        public static int EmperorKazu = 0;
+        public static int SheriffKazu = 0;
+        public static int PresidentKazu = 1;
+        public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;
         public static List<PlayerControl> dataaa;
         public static List<PlayerRolePair> rolelist;
-
+        public static bool zeninclearkana = false;
         [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.HandleRpc))]
         public static class UketoriRpc
         {
@@ -234,6 +236,13 @@ namespace SuperOldRoles.Roles.all
 
                         }
 
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.ZenInClear, SendOption.Reliable);
+
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+                        zeninclearkana = true;
+
+
                         dataaa = new List<PlayerControl>();
                         dataaa = PlayerControl.AllPlayerControls.ToArray().ToList();
 
@@ -274,11 +283,16 @@ namespace SuperOldRoles.Roles.all
                         RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Jester, JesterKazu);
                         RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Bait, BaitKazu);
                         RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Emperor, EmperorKazu);
+                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Sheriff, SheriffKazu);
+                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.president, PresidentKazu);
 
-                        
-                        
+
 
                     }
+                }
+                if ((rpcenum.rpc)callId == rpcenum.rpc.ZenInClear)
+                {
+                    zeninclearkana = true;
                 }
             }
         }

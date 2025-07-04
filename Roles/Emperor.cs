@@ -11,9 +11,8 @@ namespace SuperOldRoles.Roles
 {
     class Emperor
     {
-        public static float EmperorDistance = 1.5f; // 天皇の近くにいるときの距離
+        public static float EmperorDistance = 0.5f; // 天皇の近くにいるときの距離
         private static bool isingame = false;
-
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendFreeChat))]
         static class SendChatPatch
         {
@@ -91,7 +90,7 @@ namespace SuperOldRoles.Roles
             }
         }
 
-        /*
+        
 
         [HarmonyPatch(typeof(GameManager), nameof(GameManager.StartGame))]
         public static class hajimattatoki
@@ -110,7 +109,7 @@ namespace SuperOldRoles.Roles
                 isingame = false;
             }
         }
-
+        
 
         [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.FixedUpdate))]
         public static class EmperorNearPatch
@@ -140,7 +139,7 @@ namespace SuperOldRoles.Roles
                 {
                     return;
                 }
-                var myPos = __instance.Data.transform.position;
+                var myPos = __instance.GetTruePosition();
 
                 foreach (PlayerControl pl in PlayerControl.AllPlayerControls)
                 {
@@ -148,43 +147,42 @@ namespace SuperOldRoles.Roles
                     {
                         continue;   // 自分自身は無視
                     }
-                    if (pl.Data.IsDead)
+                    if (pl.Data.IsDead || pl.Data.Disconnected || pl.inVent)
                     {
                         continue;   // 死んでいるプレイヤーは無視
                     }
-                    float distance = Vector3.Distance(myPos,pl.Data.transform.position);
-                    // どうやってもキルしてしまう
+                    float distance = Vector2.Distance(myPos,pl.GetTruePosition());
                     if(distance <= EmperorDistance)
                     {
                         pl.MurderPlayer(pl, MurderResultFlags.Succeeded); // 天皇の近くにいるプレイヤーを殺す
+                        
                     }
                 }
             }
-        }*/
-
-
+        }
+        
 
         /*
-         * 動かん
+         * 動かんからなし
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
         public static class EmperorMurderedPatch
         {
-            public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
+            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
             {
                 foreach (PlayerRolePair dare in WariFuri.rolelist)
                 {
                     
                     if (dare.Player.PlayerId == target.PlayerId && dare.Role == RoleEnum.Emperor)
                     {
-                        __instance.MurderPlayer(__instance, MurderResultFlags.Succeeded);
-                        return;
+                        __instance.RpcMurderPlayer(__instance,true);
+                        return false;
                     }
-                    return;
+                    return true;
                 }
-                return;
+                return true;
             }
-        }*/
-
+        }
+        */
     }
 }
 

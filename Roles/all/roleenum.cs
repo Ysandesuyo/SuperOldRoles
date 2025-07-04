@@ -24,7 +24,8 @@ namespace SuperOldRoles.Roles.all
         {
             Crewmate = 0,
             Bait = 1,
-            
+            Sheriff = 2,
+            president = 3,
 
             Jester = 50,
             Emperor = 51,
