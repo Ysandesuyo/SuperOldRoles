@@ -24,10 +24,10 @@ namespace SuperOldRoles.Roles.all
 
         //役職設定画面ができるまでは手動で人数を設定しよう
         public static int JesterKazu = 0;
-        public static int BaitKazu = 1;
-        public static int EmperorKazu = 0;
-        public static int SheriffKazu = 0;
-        public static int PresidentKazu = 1;
+        public static int BaitKazu = 0;
+        public static int EmperorKazu = 1;
+        public static int SheriffKazu = 1;
+        public static int PresidentKazu = 0;
         public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;
@@ -298,11 +298,11 @@ namespace SuperOldRoles.Roles.all
         }
 
 
-        [HarmonyPatch(typeof(GameManager),nameof(GameManager.StartGame))]
+        [HarmonyPatch(typeof(IntroCutscene),nameof(IntroCutscene.CoBegin))]
         public static class hajimattatoki
         {
             
-            public static void Postfix(GameManager __instance)
+            public static void Postfix(IntroCutscene __instance)
             {
                
                     rolelist = new List<PlayerRolePair>();

@@ -1,11 +1,17 @@
 ﻿using HarmonyLib;
 using SuperOldRoles.Roles.all;
+using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 
 namespace SuperOldRoles.Roles
 {
     class Bait
     {
+
+        public static Color color = Color.cyan;
+        public static string rolename = "ベイト";
+        public static string roledescription = "俺の最後の会議だぜ！受け取ってくれー！！";
+
         [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.MurderPlayer))]
         public static class BeitReportPatch
         {

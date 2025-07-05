@@ -1,9 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using AmongUs.Data.Player;
-using HarmonyLib;
-using Hazel;
+﻿using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using SuperOldRoles.Roles.all;
+using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 
 namespace SuperOldRoles.Roles
@@ -11,6 +9,10 @@ namespace SuperOldRoles.Roles
     //  skip, count
     class PresidentPatch
     {
+
+        public static Color color = Color.yellow;
+        public static string rolename = "トナルト・ドランブ大統領";
+        public static string roledescription = "大統領ｫｫﾉｫｫﾄﾞｸｻｲｾｲｼﾞｷﾓﾁｨｨｨ\n（実際の人物・団体とは関係ありません）";
         public static int kaisu = 1;
         public static int count = 0;
         public static bool enable = false;

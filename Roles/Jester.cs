@@ -1,11 +1,15 @@
 ﻿using HarmonyLib;
 using SuperOldRoles.Roles.all;
+using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 
 namespace SuperOldRoles.Roles
 {
     class JesterPatch
     {
+        public static Color color = Color.magenta;
+        public static string rolename = "ハングドマン";
+        public static string roledescription = "名残惜しいです が追放された。";
         static bool jeskatikana = false;
         /*
          * 表示の仕方わからん
