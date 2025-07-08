@@ -113,7 +113,7 @@ Exception: System.NullReferenceException: Object reference not set to an instanc
                     {
                         HudManager.Instance.KillButton.SetTarget(closestPlayer);
                     }
-                    if (iskillbtn && KillTimer == 0)
+                    if (iskillbtn && KillTimer == 0 && closestPlayer != null)
                     {
                         if (IsSheriffKillOk(closestPlayer))
                         {

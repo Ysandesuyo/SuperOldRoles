@@ -206,7 +206,7 @@ namespace SuperOldRoles.Roles.all
 
             }
         }
-
+        public static bool shouldrun = false;
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         public static class UketoriRpc2
@@ -220,15 +220,16 @@ namespace SuperOldRoles.Roles.all
                     {
                         return;
                     }
+                    
                     clearsitakazu++;
                     MyMyPlugin.Instance.Log.LogInfo(clearsitakazu);//途中
                     if(clearsitakazu >= PlayerControl.AllPlayerControls.Count)
                     {
                         clearsitakazu = 0;
-                        bool shouldrun = false;
+                        shouldrun = false;
                         new Thread(() =>
                         {
-                            Thread.Sleep(500); // 1秒待つ
+                            Thread.Sleep(250); // 1秒待つ
                             shouldrun = true;
                         }).Start();
                         while (!shouldrun)
