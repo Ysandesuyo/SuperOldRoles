@@ -17,6 +17,7 @@ namespace SuperOldRoles.Roles
         public static string roledescription = "天皇陛下バンザｧｧｧｧイ！！";
         public static float EmperorDistance = 0.5f; // 天皇の近くにいるときの距離
         private static bool isingame = false;
+
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendFreeChat))]
         static class SendChatPatch
         {

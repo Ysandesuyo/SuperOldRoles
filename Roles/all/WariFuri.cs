@@ -238,8 +238,9 @@ namespace SuperOldRoles.Roles.all
                         }
 
                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.ZenInClear, SendOption.Reliable);
-
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.ZenInClear, SendOption.Reliable,AmongUsClient.Instance.HostId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
                         zeninclearkana = true;
 
@@ -298,14 +299,14 @@ namespace SuperOldRoles.Roles.all
             }
         }
 
-
-        [HarmonyPatch(typeof(IntroCutscene),nameof(IntroCutscene.CoBegin))]
+        //いけるんかな
+        [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Begin))]
         public static class hajimattatoki
         {
             
-            public static void Postfix(IntroCutscene __instance)
+            public static void Postfix(ShipStatus __instance)
             {
-               
+                MyMyPlugin.Instance.Log.LogInfo("shipbegindayo");
                     rolelist = new List<PlayerRolePair>();
                 
 

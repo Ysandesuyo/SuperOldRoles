@@ -12,7 +12,7 @@ namespace SuperOldRoles.Roles
 
         public static Color color = Color.yellow;
         public static string rolename = "シェリフ";
-        public static string roledescription = "動物園から脱走したぞ！！捕まえろ！！";
+        public static string roledescription = "猿シェリフが動物園から脱走したぞ！！\n捕まえろ！！";
         private static bool iskillbtn = false;
         private static float KillTimer = 0f; // クールダウンタイマー
         private static float killCool = 3.0f;
@@ -24,6 +24,7 @@ namespace SuperOldRoles.Roles
             public static void Postfix(GameManager __instance)
             {
                 isingame = true;
+                iskillbtn = false;
             }
         }
 
@@ -130,6 +131,7 @@ Exception: System.NullReferenceException: Object reference not set to an instanc
                         }
 
                         KillTimer = killCool;
+                        
                         iskillbtn = false; // クリックされたらフラグをリセット
                     }
                     
@@ -165,6 +167,7 @@ Exception: System.NullReferenceException: Object reference not set to an instanc
 
         public static bool IsSheriffKillOk(PlayerControl target)
         {
+            iskillbtn = false;
             foreach (PlayerRolePair dare in WariFuri.rolelist)
             {
                 if (dare.Player.PlayerId == target.PlayerId && ((byte)dare.Role >= 50 && (byte)dare.Role < 100))
