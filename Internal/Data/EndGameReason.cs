@@ -8,6 +8,8 @@ namespace SuperOldRoles.Internal.Data
 {
     public enum EndGameReason:byte
     {//20から始める
-        Jester=20
+        Jester=20,
+        Emperor=21,
+
     }
 }

@@ -80,6 +80,16 @@ namespace SuperOldRoles.Patch
             }
         }
 
+        [HarmonyPatch(typeof(IntroCutscene),nameof(IntroCutscene.BeginImpostor))]
+        public static class beginimpo
+        {
+            public static void Postfix()
+            {
+
+                role = RoleEnum.Impostor;
+            }
+        }
+
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
         class BeginCrewmatePatch2
         {

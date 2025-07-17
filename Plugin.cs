@@ -56,7 +56,7 @@ public class MyMyPlugin : BasePlugin
             {
                 if (text.Contains("しね") || text.Contains("ころすぞ") || text.Contains("ばか") || text.Contains("バカ") || text.Contains("アホ") || text.Contains("あほ") || text.Contains("死ね")||text.Contains("4ね") || text.Contains("殺すぞ"))
                     {
-                    __instance.AddChat(PlayerControl.LocalPlayer, "暴言吐くなやカスがよ");
+                    __instance.AddChat(PlayerControl.LocalPlayer, "暴言吐かないでください");
                     __instance.freeChatField.textArea.text = "[規制済み]";
                     __instance.SendFreeChat();
                     __instance.freeChatField.Clear();

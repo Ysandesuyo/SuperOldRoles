@@ -1,22 +1,28 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
+using Hazel;
 using InnerNet;
 using StableNameDotNet;
-using System.Collections.Generic;
+using SuperOldRoles.Roles.all;
+using SuperOldRoles.Rpc;
+using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 using static UnityEngine.GraphicsBuffer;
-using SuperOldRoles.Roles.all;
-using UnityEngine;
 
 namespace SuperOldRoles.Roles
 {
     class Emperor
     {
+        // impostorの勝利を乗っ取ろう
 
         public static Color color = Color.red;
         public static string rolename = "天皇陛下";
         public static string roledescription = "天皇陛下バンザｧｧｧｧイ！！";
         public static float EmperorDistance = 0.5f; // 天皇の近くにいるときの距離
         private static bool isingame = false;
+        public static bool emperordie = false;
+
+
 
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendFreeChat))]
         static class SendChatPatch
@@ -103,6 +109,7 @@ namespace SuperOldRoles.Roles
             public static void Postfix(GameManager __instance)
             {
                 isingame = true;
+                emperordie = false;
             }
         }
 
@@ -167,27 +174,7 @@ namespace SuperOldRoles.Roles
         }
         
 
-        /*
-         * 動かんからなし
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
-        public static class EmperorMurderedPatch
-        {
-            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
-            {
-                foreach (PlayerRolePair dare in WariFuri.rolelist)
-                {
-                    
-                    if (dare.Player.PlayerId == target.PlayerId && dare.Role == RoleEnum.Emperor)
-                    {
-                        __instance.RpcMurderPlayer(__instance,true);
-                        return false;
-                    }
-                    return true;
-                }
-                return true;
-            }
-        }
-        */
+        
     }
 }
 

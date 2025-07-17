@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SuperOldRoles.Patch;
 using UnityEngine;
+using static SuperOldRoles.Patch.EndGame;
 
 namespace SuperOldRoles.Roles.all
 {
@@ -15,6 +17,17 @@ namespace SuperOldRoles.Roles.all
             public RoleEnum Role;
 
             public PlayerRolePair(PlayerControl player, RoleEnum role)
+            {
+                Player = player;
+                Role = role;
+            }
+        }
+        public class cPlayerRolePair
+        {
+            public PlayerSnapshot Player;
+            public RoleEnum Role;
+
+            public cPlayerRolePair(PlayerSnapshot player, RoleEnum role)
             {
                 Player = player;
                 Role = role;

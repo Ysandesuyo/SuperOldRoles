@@ -23,16 +23,16 @@ namespace SuperOldRoles.Roles.all
     {
 
         //役職設定画面ができるまでは手動で人数を設定しよう
-        public static int JesterKazu = 0;
+        public static int JesterKazu = 1;
         public static int BaitKazu = 0;
         public static int EmperorKazu = 1;
-        public static int SheriffKazu = 1;
-        public static int PresidentKazu = 0;
+        public static int SheriffKazu = 0;
+        public static int PresidentKazu = 1;
         public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;
-        public static List<PlayerControl> dataaa;
-        public static List<PlayerRolePair> rolelist;
+        public static List<PlayerControl> dataaa = new List<PlayerControl>();
+        public static List<PlayerRolePair> rolelist = new List<PlayerRolePair>();
         public static bool zeninclearkana = false;
         [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.HandleRpc))]
         public static class UketoriRpc
@@ -50,6 +50,10 @@ namespace SuperOldRoles.Roles.all
 
                 if (callId == (byte)rpcenum.rpc.RoleClear)
                 {
+                    rolelist.Clear();
+                    dataaa.Clear();
+                    zeninclearkana = false;
+                    clearsitakazu = 0;
                     if (rolelist == null || rolelist.Count == 0)
                     {
                         rolelist = new List<PlayerRolePair>();
@@ -147,9 +151,6 @@ namespace SuperOldRoles.Roles.all
 
             public static void Clear()
             {
-                List<PlayerControl> allpl = PlayerControl.AllPlayerControls.ToArray().ToList();
-                
-
 
                 //これをコピーしてrpcを使おう
                 MessageWriter writer5 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.RoleClear, SendOption.Reliable);
@@ -287,7 +288,7 @@ namespace SuperOldRoles.Roles.all
                         RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Emperor, EmperorKazu);
                         RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Sheriff, SheriffKazu);
                         RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.president, PresidentKazu);
-
+                        dataaa.Clear();
 
 
                     }
@@ -307,9 +308,10 @@ namespace SuperOldRoles.Roles.all
             public static void Postfix(ShipStatus __instance)
             {
                 MyMyPlugin.Instance.Log.LogInfo("shipbegindayo");
-                    rolelist = new List<PlayerRolePair>();
-                
-
+                rolelist.Clear();
+                dataaa.Clear();
+                zeninclearkana = false;
+                clearsitakazu = 0;
                 if (!AmongUsClient.Instance.AmHost)
                 {
                     return;

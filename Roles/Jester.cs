@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using SuperOldRoles.Internal.Data;
 using SuperOldRoles.Roles.all;
 using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
@@ -53,7 +54,7 @@ namespace SuperOldRoles.Roles
                     if (dare.Player.PlayerId == plid && dare.Role == RoleEnum.Jester)
                     {
                         jeskatikana = true;
-                        GameManager.Instance.RpcEndGame(GameOverReason.ImpostorDisconnect, false);
+                        GameManager.Instance.RpcEndGame((GameOverReason) EndGameReason.Jester, false);
                         
                     }
                 }

@@ -10,7 +10,7 @@ namespace SuperOldRoles.Roles
 
         public static Color color = Color.cyan;
         public static string rolename = "ベイト";
-        public static string roledescription = "俺の最後の会議だぜ！受け取ってくれー！！";
+        public static string roledescription = "俺の最後の会議だぜ！\n受け取ってくれー！！";
 
         [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.MurderPlayer))]
         public static class BeitReportPatch

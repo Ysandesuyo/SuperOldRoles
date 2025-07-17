@@ -16,6 +16,8 @@ namespace SuperOldRoles.Rpc
             SetRoleImpo=102,
             RoleClearKakunin=103,
             ZenInClear = 104,
+            EmperorVictory = 105,
+            JesterVictory = 106,
         }
        
     }

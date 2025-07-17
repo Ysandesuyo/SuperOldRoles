@@ -15,12 +15,11 @@ namespace SuperOldRoles.Roles
         public static string roledescription = "大統領ｫｫﾉｫｫﾄﾞｸｻｲｾｲｼﾞｷﾓﾁｨｨｨ\n（実際の人物・団体とは関係ありません）";
         public static int kaisu = 1;
         public static int count = 0;
-        public static bool enable = false;
 
-        [HarmonyPatch(typeof(GameManager),nameof(GameManager.StartGame))]
+        [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Begin))]
         public static class aaaaa
         {
-            public static void Postfix(GameManager __instance)
+            public static void Postfix()
             {
                 count = 0;
             }
@@ -87,7 +86,6 @@ namespace SuperOldRoles.Roles
 
                     MyMyPlugin.Instance.Log.LogInfo("aaaanull");
                 }
-                enable = true;
                 foreach (PlayerControl pl in PlayerControl.AllPlayerControls)
                 {
                     __instance.RpcClearVote(pl.PlayerId);
