@@ -141,7 +141,7 @@ namespace SuperOldRoles.Patch
                                 EndGameResult.CachedWinners.Clear();
                                 EndGameResult.CachedWinners.Add(new CachedPlayerData(dare.Player.PlayerData));
                                 
-                                __instance.WinText.text = "天皇陛下 勝利";
+                                __instance.WinText.text = "天皇陛下 万歳";
                                 __instance.WinText.color = Emperor.color;
                                 __instance.WinText.gameObject.SetActive(true);
                                
