@@ -126,39 +126,46 @@ namespace SuperOldRoles.Patch
                     }
                 if((byte) areason <= 8)
                 {
-                    
+                    //  乗っ取り勝利役職が増えた場合
+                    //  (1),(2),(3) を既存のものと同じように書く
+
+
+                    // (1)
+                    cPlayerRolePair emperor = null;
+
+
                     foreach (cPlayerRolePair dare in thisuseList)
                     {
                         if (dare.Player.IsDead)
                         {
                             continue;
                         }
-                            //死んでても勝っちゃう
-                            if (dare.Role == RoleEnum.Emperor && !dare.Player.IsDead)
-                            {
-                                MyMyPlugin.Instance.Log.LogInfo(dare.Player.IsDead + "tennnouheika sinderu kanaaa?");
 
-                                EndGameResult.CachedWinners.Clear();
-                                EndGameResult.CachedWinners.Add(new CachedPlayerData(dare.Player.PlayerData));
-                                
-                                __instance.WinText.text = "天皇陛下 万歳";
-                                __instance.WinText.color = Emperor.color;
-                                __instance.WinText.gameObject.SetActive(true);
-                               
-                                return;
-                            }
-                            /*
-                            GameObject plobj = Object.Instantiate(dare.Player.Data.gameObject);
-                            plobj.transform.position = new Vector3(0, 0, 0);
-                            plobj.transform.localScale = new Vector3(1, 1, 1);
-                            plobj.SetActive(true);*/
+
+                        // (2)
+                        if (dare.Role == RoleEnum.Emperor && !dare.Player.IsDead)
+                        {
+                            emperor = dare;
+                        }
+
                     }
 
+
+                    // (3)
+                    if (emperor!=null)
+                    {
+                        EndGameResult.CachedWinners.Clear();
+                        EndGameResult.CachedWinners.Add(new CachedPlayerData(emperor.Player.PlayerData));
+
+                        __instance.WinText.text = "天皇陛下 万歳";
+                        __instance.WinText.color = Emperor.color;
+                        __instance.WinText.gameObject.SetActive(true);
+
+                        return;
+                    }
                     
                 }
-                //インポが普通に勝ったらどうなる？
-                // グレーが表示されるばっかり
-                
+
                 if ((EndGameReason)areason == EndGameReason.Jester)
                 {
                     foreach (cPlayerRolePair dare in thisuseList)
@@ -170,10 +177,10 @@ namespace SuperOldRoles.Patch
                             EndGameResult.CachedWinners.Add(new CachedPlayerData(dare.Player.PlayerData));
                             
 
-                            __instance.WinText.text = "ジェスター 勝利";
+                            __instance.WinText.text = "吊られた 男";
                             __instance.WinText.color = JesterPatch.color;
                             __instance.WinText.gameObject.SetActive(true);
-                            
+                            return;
                             /*
                             GameObject plobj = Object.Instantiate(dare.Player.Data.gameObject);
                             plobj.transform.position = new Vector3(0, 0, 0);
@@ -190,27 +197,36 @@ namespace SuperOldRoles.Patch
                 MyMyPlugin.Instance.Log.LogInfo((byte)areason + "reason syuuryouji");
                 if ((byte)areason <= 8)
                 {
+                    cPlayerRolePair emperor = null;
+
                     foreach (cPlayerRolePair dare in thisuseList)
                     {
-                        
-                        if (dare.Role == RoleEnum.Emperor && !dare.Player.IsDead)
-                            {
-                                MyMyPlugin.Instance.Log.LogInfo("tennnouheikasyouri");
-
-                                __instance.WinText.text = "天皇陛下 勝利";
-                                __instance.WinText.color = Emperor.color;
-                                __instance.WinText.gameObject.SetActive(true);
-
-                                return;
-                            }
-                            /*
-                            GameObject plobj = Object.Instantiate(dare.Player.Data.gameObject);
-                            plobj.transform.position = new Vector3(0, 0, 0);
-                            plobj.transform.localScale = new Vector3(1, 1, 1);
-                            plobj.SetActive(true);*/
+                        if (dare.Player.IsDead)
+                        {
+                            continue;
                         }
+                        if (dare.Role == RoleEnum.Emperor && !dare.Player.IsDead)
+                        {
+                            emperor = dare;
+                        }
+                        /*
+                        GameObject plobj = Object.Instantiate(dare.Player.Data.gameObject);
+                        plobj.transform.position = new Vector3(0, 0, 0);
+                        plobj.transform.localScale = new Vector3(1, 1, 1);
+                        plobj.SetActive(true);*/
+                    }
 
-                    
+                    if (emperor != null)
+                    {
+                        EndGameResult.CachedWinners.Clear();
+                        EndGameResult.CachedWinners.Add(new CachedPlayerData(emperor.Player.PlayerData));
+
+                        __instance.WinText.text = "天皇陛下 万歳";
+                        __instance.WinText.color = Emperor.color;
+                        __instance.WinText.gameObject.SetActive(true);
+
+                        return;
+                    }
                 }
                 //インポが普通に勝ったらどうなる？
 
@@ -224,7 +240,7 @@ namespace SuperOldRoles.Patch
                             __instance.WinText.text = "ジェスター 勝利";
                             __instance.WinText.color = JesterPatch.color;
                             __instance.WinText.gameObject.SetActive(true);
-
+                            return;
                             /*
                             GameObject plobj = Object.Instantiate(dare.Player.Data.gameObject);
                             plobj.transform.position = new Vector3(0, 0, 0);
