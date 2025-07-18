@@ -133,6 +133,9 @@ Exception: System.NullReferenceException: Object reference not set to an instanc
                         KillTimer = killCool;
                         
                         iskillbtn = false; // クリックされたらフラグをリセット
+                    }else if (iskillbtn)
+                    {
+                        iskillbtn = false;
                     }
                     
                 }
