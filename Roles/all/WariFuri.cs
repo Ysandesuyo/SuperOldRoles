@@ -24,10 +24,10 @@ namespace SuperOldRoles.Roles.all
 
         //役職設定画面ができるまでは手動で人数を設定しよう
         public static int JesterKazu = 1;
-        public static int BaitKazu = 0;
-        public static int EmperorKazu = 1;
-        public static int SheriffKazu = 0;
-        public static int PresidentKazu = 1;
+        public static int BaitKazu = 3;
+        public static int EmperorKazu = 0;
+        public static int SheriffKazu = 1;
+        public static int PresidentKazu = 0;
         public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;
@@ -165,24 +165,13 @@ namespace SuperOldRoles.Roles.all
 
 
             }
-            public static void SetRole(List<PlayerControl> playersdata, byte naniroleenum, int count)
+            public static void SetRole(PlayerControl playerdata, byte naniroleenum)
             {
-                
-                int countnaka = count;
-                // 選ぶ予定の人数より無役のプレイヤーが少なかったらブッチ
-                if (playersdata.Count < count)
-                {
-                    return;
-                }
-                for (int i = 0; i < count; i++)
-                {
-
-                    
 
 
-                    //誰を選ぶかに使うランダムな数字をセット
-                    var rand = new Random();
-                    PlayerControl selectedPlayer = playersdata[rand.Next(playersdata.Count)];
+
+
+                PlayerControl selectedPlayer = playerdata;
                     
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.SetRole, SendOption.Reliable);
@@ -198,11 +187,11 @@ namespace SuperOldRoles.Roles.all
 
 
 
-
+                    /*  呼び出し時に移転
                     dataaa.Remove(selectedPlayer); // 役職を与えたプレイヤーは、役職が二重になっても困るので、リストから消しとく
+                    */
 
-
-                }
+                
                 
 
             }
@@ -283,11 +272,30 @@ namespace SuperOldRoles.Roles.all
                             }
                         }
 
-                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Jester, JesterKazu);
-                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Bait, BaitKazu);
-                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Emperor, EmperorKazu);
-                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.Sheriff, SheriffKazu);
-                        RoleWariFuri.SetRole(dataaa, (byte)RoleEnum.president, PresidentKazu);
+                        Random random = new Random(Guid.NewGuid().GetHashCode());
+                        List<RoleEnum> fruits = new List<RoleEnum>();
+                        for (int i = 0; i < BaitKazu; i++) fruits.Add(RoleEnum.Bait);
+                        for (int i = 0; i < JesterKazu; i++) fruits.Add(RoleEnum.Jester);
+                        for (int i = 0; i < EmperorKazu; i++) fruits.Add(RoleEnum.Emperor);
+                        for (int i = 0; i < SheriffKazu; i++) fruits.Add(RoleEnum.Sheriff);
+                        for (int i = 0; i < PresidentKazu; i++) fruits.Add(RoleEnum.president);
+                        fruits = fruits.OrderBy(a => Guid.NewGuid()).ToList();
+                        List<PlayerControl> availableBoxIndices = dataaa;
+                        int fruitsToPlace = Math.Min(fruits.Count, dataaa.Count);
+                        for (int i = 0; i < fruitsToPlace; i++)
+                        {
+                            RoleEnum fruit = fruits[i];
+
+                            int randomBoxIndex = random.Next(availableBoxIndices.Count);
+                            PlayerControl boxIndex = availableBoxIndices[randomBoxIndex];
+                            RoleWariFuri.SetRole(boxIndex, (byte)fruit);
+                            availableBoxIndices.RemoveAt(randomBoxIndex);
+                        }
+
+
+
+
+
                         dataaa.Clear();
 
 
