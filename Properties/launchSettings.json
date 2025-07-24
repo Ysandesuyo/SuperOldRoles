@@ -5,7 +5,7 @@
     },
     "SOR起動": {
       "commandName": "Executable",
-      "executablePath": "$(AmongUs)\\Among Us.exe"
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Among Us\\Among Us.exe"
     }
   }
 }

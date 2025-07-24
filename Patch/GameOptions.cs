@@ -9,6 +9,8 @@ using InnerNet;
 using SuperOldRoles.Roles.all;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace SuperOldRoles.Patch
@@ -53,9 +55,14 @@ namespace SuperOldRoles.Patch
                         GameObject.Destroy(motopanel.gameObject);
                         GameObject.Destroy(header.gameObject);
                         GameObject.Destroy(basepanel.gameObject);
+                        HudManager.Instance.transform.FindChild("LobbyInfoPane").FindChild("AspectSize").gameObject.SetActive(true);
+                        HudManager.Instance.transform.FindChild("GameStartManager").gameObject.SetActive(true);
                     }
                     else
                     {
+                        
+                        HudManager.Instance.transform.FindChild("LobbyInfoPane").FindChild("AspectSize").gameObject.SetActive(false);
+                        HudManager.Instance.transform.FindChild("GameStartManager").gameObject.SetActive(false);
 
                         motopanel = GameObject.Instantiate(HudManager.Instance.MeetingPrefab);
                         motopanel.name = "motopanel";
@@ -73,7 +80,6 @@ namespace SuperOldRoles.Patch
                         motopanel.transform.SetLocalZ(-200f);
                         motopanel.meetingContents.FindChild("PhoneUI").FindChild("baseColor").gameObject.transform.SetLocalZ(-200f);
                         
-
                         
                         VerticalLayoutGroup layout = motopanel.gameObject.AddComponent<VerticalLayoutGroup>();
                         RectOffset offset = new RectOffset();
@@ -120,12 +126,33 @@ namespace SuperOldRoles.Patch
                         brt.sizeDelta = basesize;
                         brt.anchoredPosition = new Vector2(0f, 0f);
                         basepanel.transform.SetLocalZ(-201f);
+                        
+                        BoxCollider2D col = basepanel.gameObject.AddComponent<BoxCollider2D>();
+                        col.size = basesize;
+                        
 
                         //クリックが後ろのやつに反応しちゃう
 
                         isshow = true;
                     }
                         
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit2D hit2d = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
+
+                    if (hit2d)
+                    {
+                        GameObject clickedGameObject = hit2d.transform.gameObject;
+                        if (clickedGameObject.name == "basepanel")
+                        {
+
+                            GameObject.Destroy(clickedGameObject);//ゲームオブジェクトを破壊
+                        }
+                        Debug.Log(clickedGameObject.name);//ゲームオブジェクトの名前を出力
+                    }
+
                 }
             }
         }
