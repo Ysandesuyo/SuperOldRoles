@@ -16,6 +16,7 @@ using System.Threading;
 using AmongUs.GameOptions;
 using SuperOldRoles.Roles.all;
 using Hazel;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SuperOldRoles.Roles.all
 {
@@ -29,6 +30,10 @@ namespace SuperOldRoles.Roles.all
         public static int SheriffKazu = 1;
         public static int PresidentKazu = 0;
         public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
+
+        public static int CrewKazu = 0;
+        public static int NeutKazu = 0;
+
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;
         public static List<PlayerControl> dataaa = new List<PlayerControl>();
@@ -272,6 +277,8 @@ namespace SuperOldRoles.Roles.all
                             }
                         }
 
+                        int CrewCount = 0;
+                        int NeutCount = 0;
                         Random random = new Random(Guid.NewGuid().GetHashCode());
                         List<RoleEnum> fruits = new List<RoleEnum>();
                         for (int i = 0; i < BaitKazu; i++) fruits.Add(RoleEnum.Bait);
@@ -285,6 +292,30 @@ namespace SuperOldRoles.Roles.all
                         for (int i = 0; i < fruitsToPlace; i++)
                         {
                             RoleEnum fruit = fruits[i];
+                            if((byte)fruit >= 50 && (byte)fruit < 100)//第三なら
+                            {
+                                if(NeutKazu <= NeutCount)
+                                {
+
+                                    continue;
+                                }
+                                else
+                                {
+                                    NeutCount++;
+                                }
+                            }
+                            else//クルーなら
+                            {
+                                if (CrewKazu <= CrewCount)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    CrewCount++;
+                                }
+                                
+                            }
 
                             int randomBoxIndex = random.Next(availableBoxIndices.Count);
                             PlayerControl boxIndex = availableBoxIndices[randomBoxIndex];
