@@ -31,8 +31,8 @@ namespace SuperOldRoles.Roles.all
         public static int PresidentKazu = 0;
         public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
 
-        public static int CrewKazu = 0;
-        public static int NeutKazu = 0;
+        public static int CrewKazu = 3;
+        public static int NeutKazu = 3;
 
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;

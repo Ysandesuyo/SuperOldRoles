@@ -15,7 +15,7 @@ namespace SuperOldRoles.Roles
         public static string roledescription = "猿シェリフが動物園から脱走したぞ！！\n捕まえろ！！";
         private static bool iskillbtn = false;
         private static float KillTimer = 0f; // クールダウンタイマー
-        private static float killCool = 3.0f;
+        public static int killCool = 27;
         private static bool isingame = false;
 
         [HarmonyPatch(typeof(GameManager), nameof(GameManager.StartGame))]

@@ -177,7 +177,7 @@ namespace SuperOldRoles.Patch
                             EndGameResult.CachedWinners.Add(new CachedPlayerData(dare.Player.PlayerData));
                             
 
-                            __instance.WinText.text = "吊られた 男";
+                            __instance.WinText.text = "男 吊られた";
                             __instance.WinText.color = JesterPatch.color;
                             __instance.WinText.gameObject.SetActive(true);
                             return;
@@ -237,7 +237,7 @@ namespace SuperOldRoles.Patch
                         if (dare.Role == RoleEnum.Jester)
                         {
 
-                            __instance.WinText.text = "ジェスター 勝利";
+                            __instance.WinText.text = "男 吊られた";
                             __instance.WinText.color = JesterPatch.color;
                             __instance.WinText.gameObject.SetActive(true);
                             return;

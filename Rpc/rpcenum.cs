@@ -18,6 +18,12 @@ namespace SuperOldRoles.Rpc
             ZenInClear = 104,
             EmperorVictory = 105,
             JesterVictory = 106,
+            RoleSetRpc = 107,
+        }
+        public enum rolesetrpc : byte
+        {
+            SheriffCool = 1,
+            PresidentKaisu = 2,
         }
        
     }
