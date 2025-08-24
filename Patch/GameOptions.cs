@@ -681,7 +681,22 @@ namespace SuperOldRoles.Patch
                 }
             }
         }
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Begin))]
+        public static class  kaisi
+        {
+            public static void Postfix()
+            {
+                MessageWriter writer4 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.RoleSetRpc, SendOption.Reliable);
+                writer4.Write((byte)rpcenum.rolesetrpc.SheriffCool);
+                writer4.Write(Sheriff.killCool);
+                AmongUsClient.Instance.FinishRpcImmediately(writer4);
 
+                MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.RoleSetRpc, SendOption.Reliable);
+                writer2.Write((byte)rpcenum.rolesetrpc.PresidentKaisu);
+                writer2.Write(PresidentPatch.kaisu);
+                AmongUsClient.Instance.FinishRpcImmediately(writer2);
+            }
+        }
     }
 }
 
