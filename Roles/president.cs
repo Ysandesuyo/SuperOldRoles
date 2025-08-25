@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using SuperOldRoles.Roles.all;
+using TMPro;
 using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 
@@ -15,6 +16,35 @@ namespace SuperOldRoles.Roles
         public static string roledescription = "大統領ｫｫﾉｫｫﾄﾞｸｻｲｾｲｼﾞｷﾓﾁｨｨｨ\n（実際の人物・団体とは関係ありません）";
         public static int kaisu = 1;
         public static int count = 0;
+
+        [HarmonyPatch(typeof(GameManager), nameof(GameManager.StartGame))]
+        public static class hajimattatoki
+        {
+            public static void Postfix(GameManager __instance)
+            {
+                foreach (PlayerRolePair dare in WariFuri.rolelist)
+                {
+                    if (dare.Player.PlayerId == PlayerControl.LocalPlayer.PlayerId && dare.Role == RoleEnum.president)
+                    {
+
+                        GameObject titletext = new GameObject("jibunrolehyoujimoji" + PlayerControl.LocalPlayer.PlayerId);
+                        titletext.transform.SetParent(PlayerControl.LocalPlayer.transform, false);
+                        titletext.layer = 5;
+                        titletext.transform.SetLocalZ(-1f);
+                        titletext.transform.SetLocalY(1.5f);
+                        titletext.transform.localScale = new Vector3(2f, 3f, 1f);
+
+                        TextMeshPro testText1 = titletext.AddComponent<TextMeshPro>();
+                        testText1.fontSize = 1; // フォントサイズ 48px
+                        testText1.color = new Color(1f, 1f, 0f);
+                        testText1.alignment = TextAlignmentOptions.Center; // 中央揃え
+                        testText1.enableWordWrapping = false; // 自動改行無し
+                        testText1.sortingOrder = 0; // 画像 (SpriteRenderer) と同様、描画順序指定が必要
+                        testText1.text = "トナルト・ドランブ大統領";
+                    }
+                }
+            }
+        }
 
         [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Begin))]
         public static class aaaaa

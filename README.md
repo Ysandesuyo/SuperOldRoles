@@ -12,3 +12,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 このMODはAmong UsまたはInnersloth LLCとは一切関係がなく、含まれるコンテンツはInnersloth LLCによる承認またはスポンサーシップを受けていません。ここに含まれる素材の一部はInnersloth LLCの所有物です。© Innersloth LLC.
 
 このMODを使用して発生した不具合については、 **絶対にInnersloth（アモアスのデベロッパー）に報告しないでください。** 報告は、==工事中==の場所に行ってください。
+
+このMODは個人開発でクオリティが低く、適当に作りました。**お遊び程度に**お使いください。
+
+確実に足りていない機能・仕様があります。ご了承ください。

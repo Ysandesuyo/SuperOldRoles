@@ -5,6 +5,7 @@ using InnerNet;
 using StableNameDotNet;
 using SuperOldRoles.Roles.all;
 using SuperOldRoles.Rpc;
+using TMPro;
 using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 using static UnityEngine.GraphicsBuffer;
@@ -22,7 +23,34 @@ namespace SuperOldRoles.Roles
         private static bool isingame = false;
         public static bool emperordie = false;
 
+        [HarmonyPatch(typeof(GameManager), nameof(GameManager.StartGame))]
+        public static class hajimattatoki1
+        {
+            public static void Postfix(GameManager __instance)
+            {
+                foreach (PlayerRolePair dare in WariFuri.rolelist)
+                {
+                    if (dare.Player.PlayerId == PlayerControl.LocalPlayer.PlayerId && dare.Role == RoleEnum.Emperor)
+                    {
 
+                        GameObject titletext = new GameObject("jibunrolehyoujimoji" + PlayerControl.LocalPlayer.PlayerId);
+                        titletext.transform.SetParent(PlayerControl.LocalPlayer.transform, false);
+                        titletext.layer = 5;
+                        titletext.transform.SetLocalZ(-1f);
+                        titletext.transform.SetLocalY(1.5f);
+                        titletext.transform.localScale = new Vector3(2f, 3f, 1f);
+
+                        TextMeshPro testText1 = titletext.AddComponent<TextMeshPro>();
+                        testText1.fontSize = 1; // フォントサイズ 48px
+                        testText1.color = new Color(1f, 0f, 0f);
+                        testText1.alignment = TextAlignmentOptions.Center; // 中央揃え
+                        testText1.enableWordWrapping = false; // 自動改行無し
+                        testText1.sortingOrder = 0; // 画像 (SpriteRenderer) と同様、描画順序指定が必要
+                        testText1.text = "天皇陛下";
+                    }
+                }
+            }
+        }
 
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendFreeChat))]
         static class SendChatPatch

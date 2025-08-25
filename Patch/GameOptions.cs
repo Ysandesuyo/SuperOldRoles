@@ -65,7 +65,7 @@ namespace SuperOldRoles.Patch
             }
         }
 
-        private static GameObject CreatePrimitive2D(string name, Vector2 size, Color color)
+        public static GameObject CreatePrimitive2D(string name, Vector2 size, Color color)
         {
             // 空のオブジェクト作成
             GameObject obj = new GameObject(name);

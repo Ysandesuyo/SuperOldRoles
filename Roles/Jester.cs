@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using SuperOldRoles.Internal.Data;
 using SuperOldRoles.Roles.all;
+using TMPro;
 using UnityEngine;
 using static SuperOldRoles.Roles.all.roleenum;
 
@@ -12,36 +13,36 @@ namespace SuperOldRoles.Roles
         public static string rolename = "ハングドマン";
         public static string roledescription = "名残惜しいです が追放された。";
         static bool jeskatikana = false;
-        /*
-         * 表示の仕方わからん
-        [HarmonyPatch(typeof(IntroCutscene),nameof(IntroCutscene.CoBegin))]
-        public static class jesterrolehyouji
+
+
+        [HarmonyPatch(typeof(GameManager), nameof(GameManager.StartGame))]
+        public static class hajimattatoki
         {
-            public static bool Prefix(IntroCutscene __instance)
+            public static void Postfix(GameManager __instance)
             {
-                PlayerControl pl = PlayerControl.LocalPlayer;
-                if (WariFuri.role.Count == 0)
+                foreach (PlayerRolePair dare in WariFuri.rolelist)
                 {
-                    return true;
-                }
-                foreach (PlayerRolePair pair in WariFuri.role)
-                {
-                    if (pair.Role == RoleEnum.Jester && pl.PlayerId==pair.Player.plid)
+                    if (dare.Player.PlayerId == PlayerControl.LocalPlayer.PlayerId && dare.Role == RoleEnum.Jester)
                     {
-                        __instance.TeamTitle.text = "第三陣営";
-                        __instance.TeamTitle.color = Color.gray;
-                        __instance.RoleText.text = "ジェスター";
-                        __instance.RoleBlurbText.text = "ジェスター";
-                        __instance.RoleBlurbText.color = Color.magenta;
-                        __instance.RoleText.color = Color.magenta;
-                        __instance.BackgroundBar.material.color = Color.gray;
-                        break;
+
+                        GameObject titletext = new GameObject("jibunrolehyoujimoji" + PlayerControl.LocalPlayer.PlayerId);
+                        titletext.transform.SetParent(PlayerControl.LocalPlayer.transform, false);
+                        titletext.layer = 5;
+                        titletext.transform.SetLocalZ(-1f);
+                        titletext.transform.SetLocalY(1.5f);
+                        titletext.transform.localScale = new Vector3(2f, 3f, 1f);
+
+                        TextMeshPro testText1 = titletext.AddComponent<TextMeshPro>();
+                        testText1.fontSize = 1; // フォントサイズ 48px
+                        testText1.color = Color.magenta;
+                        testText1.alignment = TextAlignmentOptions.Center; // 中央揃え
+                        testText1.enableWordWrapping = false; // 自動改行無し
+                        testText1.sortingOrder = 0; // 画像 (SpriteRenderer) と同様、描画順序指定が必要
+                        testText1.text = "ハングドマン";
                     }
                 }
-                return true;
             }
         }
-        */
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Exiled))]
         public static class JesterExilepatch

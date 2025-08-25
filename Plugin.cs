@@ -3,6 +3,10 @@ using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using InnerNet;
+using SuperOldRoles.Patch;
+using TMPro;
+using UnityEngine;
+using static Il2CppMono.Security.X509.X520;
 //情報を読み込む
 
 
@@ -40,7 +44,52 @@ public class MyMyPlugin : BasePlugin
         {
             //ModManagerのインスタンスを取り出して、ModStampを表示する。
             ModManager.Instance.ShowModStamp();
-            
+            GameObject basyo = __instance.mainMenuUI.transform.Find("AspectScaler").Find("RightPanel").gameObject;
+            GameObject titletext = new GameObject("SORtext1");
+            titletext.transform.SetParent(basyo.transform, false);
+            titletext.layer = 5;
+            titletext.transform.localPosition = new Vector3(-3f, 2f, -2f);
+            titletext.transform.localScale = new Vector3(2.25f, 2f, 1f);
+
+            TextMeshPro testText1 = titletext.AddComponent<TextMeshPro>();
+            testText1.fontSize = 2; // フォントサイズ 48px
+            testText1.color = new Color(1f, 0f, 0f);
+            testText1.alignment = TextAlignmentOptions.Center; // 中央揃え
+            testText1.enableWordWrapping = false; // 自動改行無し
+            testText1.sortingOrder = 0; // 画像 (SpriteRenderer) と同様、描画順序指定が必要
+            testText1.text = "Super";
+
+            GameObject titletext2 = new GameObject("SORtext2");
+            titletext2.transform.SetParent(basyo.transform, false);
+            titletext2.layer = 5;
+            titletext2.transform.localPosition = new Vector3(-1f, 2f, -2f);
+            titletext2.transform.localScale = new Vector3(2.25f, 2f, 1f);
+
+            TextMeshPro testText2 = titletext2.AddComponent<TextMeshPro>();
+            testText2.fontSize = 2; // フォントサイズ 48px
+            testText2.color = new Color(0f, 0f, 1f);
+            testText2.alignment = TextAlignmentOptions.Center; // 中央揃え
+            testText2.enableWordWrapping = false; // 自動改行無し
+            testText2.sortingOrder = 0; // 画像 (SpriteRenderer) と同様、描画順序指定が必要
+            testText2.text = "Old";
+
+            GameObject titletext3 = new GameObject("SORtext3");
+            titletext3.transform.SetParent(basyo.transform, false);
+            titletext3.layer = 5;
+            titletext3.transform.localPosition = new Vector3(1f, 2f, -2f);
+            titletext3.transform.localScale = new Vector3(2.25f, 2f, 1f);
+
+            TextMeshPro testText3 = titletext3.AddComponent<TextMeshPro>();
+            testText3.fontSize = 2; // フォントサイズ 48px
+            testText3.color = new Color(0f, 1f, 0f);
+            testText3.alignment = TextAlignmentOptions.Center; // 中央揃え
+            testText3.enableWordWrapping = false; // 自動改行無し
+            testText3.sortingOrder = 0; // 画像 (SpriteRenderer) と同様、描画順序指定が必要
+            testText3.text = "Roles";
+
+            GameObject back = GameOption.CreatePrimitive2D("SORtextback", new Vector2(6f, 0.75f), new Color(1f, 1f, 1f));
+            back.transform.SetParent(basyo.transform, false);
+            back.transform.localPosition = new Vector3(-1f, 2f, -1f);
         }
     }
 
