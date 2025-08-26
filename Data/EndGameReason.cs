@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperOldRoles.Internal.Data
+namespace SuperOldRoles.Data
 {
     public enum EndGameReason:byte
     {//20から始める

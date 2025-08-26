@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using InnerNet;
-using SuperOldRoles.Internal.Data;
+using SuperOldRoles.Data;
 using SuperOldRoles.Roles;
 using SuperOldRoles;
 using System;
@@ -25,14 +25,15 @@ namespace SuperOldRoles.Roles.all
 
         //役職設定画面ができるまでは手動で人数を設定しよう
         public static int JesterKazu = 1;
-        public static int BaitKazu = 3;
-        public static int EmperorKazu = 0;
+        public static int BaitKazu = 0;
+        public static int EmperorKazu = 1;
         public static int SheriffKazu = 1;
-        public static int PresidentKazu = 0;
+        public static int PresidentKazu = 1;
         public static int ZenbuKazu = JesterKazu + BaitKazu + EmperorKazu + SheriffKazu + PresidentKazu;
 
-        public static int CrewKazu = 3;
-        public static int NeutKazu = 3;
+        public static int CrewKazu = 15;
+        public static int NeutKazu = 15;
+        public static int ImpoKazu = 3;
 
         //clearしてない状態で呼ぶのを防ごう
         public static int clearsitakazu = 0;
@@ -89,7 +90,7 @@ namespace SuperOldRoles.Roles.all
 
                     //誰を選ぶんだっけ、受け取ったIDからプレイヤー情報を抽出しよっと
                     PlayerControl pl = null;
-                    foreach (var p in PlayerControl.AllPlayerControls.ToArray().ToList())
+                    foreach (var p in PlayerControl.AllPlayerControls)//toarraytolist
                     {
                         if (p.PlayerId == dareid)
                         {
@@ -105,7 +106,7 @@ namespace SuperOldRoles.Roles.all
                     //以下、テスト用
 
                     //わかりやすく名前つけとく
-                    pl.SetName("私の役職は"+naniroleenum+"です");
+                    //pl.SetName("私の役職は"+naniroleenum+"です");
 
 
 
@@ -144,7 +145,7 @@ namespace SuperOldRoles.Roles.all
                     //以下、テスト用
 
                     //わかりやすく名前つけとく
-                    pl.SetName("私の役職はインポスターです");
+                    //pl.SetName("私の役職はインポスターです");
                     
 
 
@@ -250,25 +251,53 @@ namespace SuperOldRoles.Roles.all
                         {
                             return;
                         }
-                        for (int i = dataaa.Count - 1; i >= 0; i--)
+                        for (int j = dataaa.Count - 1; j >= 0; j--)
                         {
-                            PlayerControl pla = dataaa[i];
+                            PlayerControl pla = dataaa[j];
                             if (pla.Data.RoleType == RoleTypes.Impostor)
                             {
                                 PlayerControl selectedPlayer = pla;
                                 List<PlayerControl> allpl = PlayerControl.AllPlayerControls.ToArray().ToList();
 
 
-                                MessageWriter writer3 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.SetRoleImpo, SendOption.Reliable);
-                                writer3.Write((byte)RoleEnum.Impostor);
-                                writer3.Write(selectedPlayer.PlayerId);
+                                int ImpoCount = 0;
+                                Random randomi = new Random(Guid.NewGuid().GetHashCode());
+                                List<RoleEnum> fruitsi = new List<RoleEnum>();
 
-                                AmongUsClient.Instance.FinishRpcImmediately(writer3);
-                                MessageWriter writer4 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.SetRoleImpo, SendOption.Reliable, AmongUsClient.Instance.HostId);
-                                writer4.Write((byte)RoleEnum.Impostor);
-                                writer4.Write(selectedPlayer.PlayerId);
+                                //for (int i = 0; i < BaitKazu; i++) fruitsi.Add(RoleEnum.Bait);
 
-                                AmongUsClient.Instance.FinishRpcImmediately(writer4);
+                                fruitsi = fruitsi.OrderBy(a => Guid.NewGuid()).ToList();
+                                List<PlayerControl> availableBoxIndicesi = dataaa;
+                                int fruitsToPlacei = Math.Min(fruitsi.Count, dataaa.Count);
+                                for (int i = 0; i < fruitsToPlacei; i++)
+                                {
+                                    RoleEnum fruit = fruitsi[i];
+                                    if (ImpoKazu <= ImpoCount)
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        ImpoCount++;
+                                    }
+
+                                    int randomBoxIndex = randomi.Next(availableBoxIndicesi.Count);
+                                    PlayerControl boxIndex = availableBoxIndicesi[randomBoxIndex];
+
+                                    MessageWriter writer3 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.SetRoleImpo, SendOption.Reliable);
+                                    writer3.Write((byte)RoleEnum.Impostor);
+                                    writer3.Write(selectedPlayer.PlayerId);
+                                    AmongUsClient.Instance.FinishRpcImmediately(writer3);
+
+                                    MessageWriter writer4 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpcenum.rpc.SetRoleImpo, SendOption.Reliable, AmongUsClient.Instance.HostId);
+                                    writer4.Write((byte)RoleEnum.Impostor);
+                                    writer4.Write(selectedPlayer.PlayerId);
+                                    AmongUsClient.Instance.FinishRpcImmediately(writer4);
+
+                                    availableBoxIndicesi.RemoveAt(randomBoxIndex);
+                                }
+
+                                
 
 
 

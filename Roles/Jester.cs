@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using SuperOldRoles.Internal.Data;
+using SuperOldRoles.Data;
 using SuperOldRoles.Roles.all;
 using TMPro;
 using UnityEngine;
